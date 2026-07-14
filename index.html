@@ -230,10 +230,10 @@
     <h2><span class="num">01</span> <span data-lang="ru">Установка</span><span data-lang="en" style="display:none;">Installation</span></h2>
     <p data-lang="ru">Подключите библиотеку одной строкой через <code>loadstring</code>, указав свою ссылку на raw-код.</p>
     <p data-lang="en" style="display:none;">Load the library in a single line via <code>loadstring</code>, pointing to your own raw source link.</p>
-    <pre><span class="pre-label">luau</span><code><span class="kw">local</span> UI = <span class="fn">loadstring</span>(<span class="fn">game</span>:<span class="fn">HttpGet</span>(<span class="str">"https://pastebin.com/raw/ТВОЙ_КОД"</span>))()</code></pre>
+    <pre><span class="pre-label">luau</span><code><span class="kw">local</span> UI = <span class="fn">loadstring</span>(<span class="fn">game</span>:<span class="fn">HttpGet</span>(<span class="str">"https://pastebin.com/raw/qzxqAR0a"</span>))()</code></pre>
     <div class="callout">
-      <span data-lang="ru"><b>Примечание.</b> Замените <code>ТВОЙ_КОД</code> на идентификатор вашего raw-пастбина перед использованием.</span>
-      <span data-lang="en" style="display:none;"><b>Note.</b> Replace <code>ТВОЙ_КОД</code> with your own raw pastebin ID before use.</span>
+      <span data-lang="ru"><b>Примечание.</b> Убедитесь, что raw-пастбин доступен публично перед использованием.</span>
+      <span data-lang="en" style="display:none;"><b>Note.</b> Make sure the raw pastebin is publicly accessible before use.</span>
     </div>
   </section>
 
@@ -306,7 +306,7 @@
     <h2><span data-lang="ru">Полный пример</span><span data-lang="en" style="display:none;">Full example</span></h2>
     <p data-lang="ru">Ниже приведён минимальный рабочий пример, объединяющий окно, вкладку и все основные компоненты.</p>
     <p data-lang="en" style="display:none;">Below is a minimal working example combining a window, a tab, and all core components.</p>
-    <pre><span class="pre-label">luau</span><code><span class="kw">local</span> UI = <span class="fn">loadstring</span>(<span class="fn">game</span>:<span class="fn">HttpGet</span>(<span class="str">"https://pastebin.com/raw/ТВОЙ_КОД"</span>))()
+    <pre><span class="pre-label">luau</span><code><span class="kw">local</span> UI = <span class="fn">loadstring</span>(<span class="fn">game</span>:<span class="fn">HttpGet</span>(<span class="str">"https://pastebin.com/raw/qzxqAR0a"</span>))()
 <span class="kw">local</span> win = UI:<span class="fn">CreateWindow</span>(<span class="str">"Моё меню"</span>)
 <span class="kw">local</span> main = win:<span class="fn">CreateTab</span>(<span class="str">"Главная"</span>)
 main:<span class="fn">CreateSection</span>(<span class="str">"Управление"</span>)
@@ -346,6 +346,7 @@ function setLang(lang){
   document.documentElement.lang = lang;
 }
 
+// active state in sidebar on scroll
 const links = document.querySelectorAll('.sidebar a[href^="#"]');
 const sections = Array.from(links).map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
 const observer = new IntersectionObserver((entries)=>{
