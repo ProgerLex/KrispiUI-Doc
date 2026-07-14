@@ -44,5 +44,5 @@ end)
 ---
  
 <div align="center">
-<sub>➜ KRISPI UI · v2.1 · сделано с душой</sub>
+<sub>➜ KRISPI UI · v2.1 · Сделано с душой</sub>
 </div>
