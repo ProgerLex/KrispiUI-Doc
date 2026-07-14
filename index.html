@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KRISPI UI — Documentation</title>
+<style>
+  :root{
+    --bg:#ffffff;
+    --sidebar-bg:#f7f8fa;
+    --border:#e3e6ea;
+    --text:#1a1f2b;
+    --text-soft:#5b6472;
+    --text-faint:#8a93a1;
+    --accent:#2952e3;
+    --accent-soft:#eef1fd;
+    --code-bg:#1a1f2b;
+    --code-text:#e7eaf2;
+    --code-kw:#c792ea;
+    --code-str:#8bd17c;
+    --code-fn:#6fa8f5;
+    --code-num:#e8a15c;
+    --code-prop:#e8c46c;
+    --radius:6px;
+    --mono: 'IBM Plex Mono', 'JetBrains Mono', Consolas, monospace;
+    --sans: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);
+    color:var(--text);
+    background:var(--bg);
+    display:flex;
+    min-height:100vh;
+  }
+
+  /* ============ TOPBAR ============ */
+  .topbar{
+    position:fixed; top:0; left:0; right:0; height:56px;
+    background:#fff; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 20px; z-index:100;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:15px;}
+  .brand .mark{
+    width:26px; height:26px; border-radius:6px; background:var(--accent);
+    color:#fff; display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:800; font-family:var(--mono);
+  }
+  .brand .sep{color:var(--text-faint); font-weight:400;}
+  .topbar-right{display:flex; align-items:center; gap:14px;}
+  .version-pill{
+    font-family:var(--mono); font-size:11px; font-weight:600;
+    color:var(--accent); background:var(--accent-soft);
+    padding:3px 9px; border-radius:20px; border:1px solid #d7deffff;
+  }
+  .lang-switch{
+    display:flex; border:1px solid var(--border); border-radius:6px; overflow:hidden;
+  }
+  .lang-switch button{
+    font-family:var(--mono); font-size:12px; font-weight:700;
+    padding:6px 12px; border:none; background:#fff; color:var(--text-faint);
+    cursor:pointer; transition:.15s;
+  }
+  .lang-switch button.active{ background:var(--accent); color:#fff; }
+  .lang-switch button:not(.active):hover{ background:var(--sidebar-bg); color:var(--text); }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar{
+    position:fixed; top:56px; left:0; bottom:0; width:250px;
+    background:var(--sidebar-bg); border-right:1px solid var(--border);
+    overflow-y:auto; padding:24px 0;
+  }
+  .sidebar .group-label{
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--text-faint); padding:0 20px; margin:18px 0 8px;
+  }
+  .sidebar .group-label:first-child{ margin-top:0; }
+  .sidebar a{
+    display:block; padding:7px 20px; font-size:13.5px; color:var(--text-soft);
+    text-decoration:none; border-left:2px solid transparent;
+  }
+  .sidebar a:hover{ color:var(--text); background:#eef0f3; }
+  .sidebar a.active{
+    color:var(--accent); border-left-color:var(--accent); background:var(--accent-soft); font-weight:600;
+  }
+
+  /* ============ MAIN ============ */
+  main{
+    margin-left:250px; margin-top:56px; flex:1;
+    display:flex; justify-content:center;
+    padding:48px 48px 120px;
+  }
+  .content{ max-width:760px; width:100%; }
+
+  .breadcrumb{
+    font-size:12.5px; color:var(--text-faint); margin-bottom:10px; font-family:var(--mono);
+  }
+  .breadcrumb .current{ color:var(--text-soft); }
+
+  .page-header{ margin-bottom:40px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+  .page-header h1{ font-size:32px; letter-spacing:-.02em; margin-bottom:8px;}
+  .page-header p{ color:var(--text-soft); font-size:15.5px; max-width:600px; }
+  .badges{ display:flex; gap:8px; margin-top:14px; }
+  .badge{
+    font-size:11px; font-weight:700; padding:3px 10px; border-radius:4px;
+    font-family:var(--mono); text-transform:uppercase; letter-spacing:.03em;
+  }
+  .badge.stable{ background:#e6f6ec; color:#1a8a4a; border:1px solid #c3e9d1; }
+  .badge.roblox{ background:#f2eefd; color:#6b3fd4; border:1px solid #ded0f9; }
+
+  section.doc-section{ margin-top:56px; scroll-margin-top:76px; }
+  section.doc-section:first-of-type{ margin-top:0; }
+  h2{ font-size:22px; letter-spacing:-.01em; margin-bottom:6px; display:flex; align-items:center; gap:10px;}
+  h2 .num{ font-family:var(--mono); font-size:13px; color:var(--text-faint); font-weight:500; }
+  h3{ font-size:16px; margin-top:26px; margin-bottom:8px; color:var(--text); font-weight:600; }
+  p{ color:var(--text-soft); font-size:14.5px; margin:10px 0 14px; max-width:640px; }
+  p code, li code{
+    font-family:var(--mono); background:var(--sidebar-bg); border:1px solid var(--border);
+    padding:1px 6px; border-radius:4px; font-size:13px; color:var(--accent);
+  }
+
+  pre{
+    background:var(--code-bg); color:var(--code-text); border-radius:var(--radius);
+    padding:16px 18px; overflow-x:auto; font-size:13px; margin:14px 0;
+    position:relative; border:1px solid #2a3040;
+  }
+  pre .pre-label{
+    position:absolute; top:0; right:0; font-family:var(--mono); font-size:10px;
+    font-weight:700; color:#8892a4; background:#232a3a; padding:4px 10px;
+    border-bottom-left-radius:6px; text-transform:uppercase; letter-spacing:.04em;
+  }
+  code{ font-family:var(--mono); line-height:1.7; }
+  .kw{ color:var(--code-kw); }
+  .str{ color:var(--code-str); }
+  .fn{ color:var(--code-fn); }
+  .num{ color:var(--code-num); }
+  .prop{ color:var(--code-prop); }
+
+  .callout{
+    display:flex; gap:10px; background:var(--accent-soft); border:1px solid #d7deff;
+    border-left:3px solid var(--accent); border-radius:6px; padding:12px 14px; margin:16px 0;
+    font-size:13.5px; color:#33396a;
+  }
+  .callout b{ color:var(--accent); }
+
+  .param-table{ width:100%; border-collapse:collapse; margin:14px 0 20px; font-size:13.5px; }
+  .param-table th{
+    text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.04em;
+    color:var(--text-faint); border-bottom:1px solid var(--border); padding:8px 10px; font-weight:700;
+  }
+  .param-table td{ padding:9px 10px; border-bottom:1px solid #eef0f3; color:var(--text-soft); }
+  .param-table td:first-child{ font-family:var(--mono); color:var(--text); font-weight:600; }
+  .param-table td.type{ color:var(--accent); font-family:var(--mono); font-size:12px; }
+
+  hr.divider{ border:none; border-top:1px solid var(--border); margin:48px 0; }
+
+  footer{
+    max-width:760px; margin:60px auto 0; padding-top:24px; border-top:1px solid var(--border);
+    font-size:12.5px; color:var(--text-faint); display:flex; justify-content:space-between;
+  }
+
+  @media (max-width:900px){
+    .sidebar{ display:none; }
+    main{ margin-left:0; padding:36px 20px 100px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="mark">K</div>
+    <span>KRISPI UI</span>
+    <span class="sep">/</span>
+    <span style="color:var(--text-soft); font-weight:500;" data-lang="ru">документация</span>
+    <span style="color:var(--text-soft); font-weight:500; display:none;" data-lang="en">documentation</span>
+  </div>
+  <div class="topbar-right">
+    <span class="version-pill">v2.1</span>
+    <div class="lang-switch">
+      <button id="btn-ru" class="active" onclick="setLang('ru')">RU</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="group-label" data-lang="ru">Начало работы</div>
+  <div class="group-label" data-lang="en" style="display:none;">Getting started</div>
+  <a href="#install">01 · <span data-lang="ru">Установка</span><span data-lang="en" style="display:none;">Installation</span></a>
+  <a href="#window">02 · <span data-lang="ru">Создание окна</span><span data-lang="en" style="display:none;">Creating a window</span></a>
+  <a href="#tabs">03 · <span data-lang="ru">Вкладки</span><span data-lang="en" style="display:none;">Tabs</span></a>
+
+  <div class="group-label" data-lang="ru">Компоненты</div>
+  <div class="group-label" data-lang="en" style="display:none;">Components</div>
+  <a href="#el-section"><span data-lang="ru">Секция</span><span data-lang="en" style="display:none;">Section</span></a>
+  <a href="#el-button"><span data-lang="ru">Кнопка</span><span data-lang="en" style="display:none;">Button</span></a>
+  <a href="#el-toggle"><span data-lang="ru">Тоггл</span><span data-lang="en" style="display:none;">Toggle</span></a>
+  <a href="#el-slider"><span data-lang="ru">Слайдер</span><span data-lang="en" style="display:none;">Slider</span></a>
+  <a href="#el-dropdown"><span data-lang="ru">Дропдаун</span><span data-lang="en" style="display:none;">Dropdown</span></a>
+
+  <div class="group-label" data-lang="ru">Справка</div>
+  <div class="group-label" data-lang="en" style="display:none;">Reference</div>
+  <a href="#example"><span data-lang="ru">Полный пример</span><span data-lang="en" style="display:none;">Full example</span></a>
+  <a href="#close"><span data-lang="ru">Закрытие</span><span data-lang="en" style="display:none;">Closing</span></a>
+</nav>
+
+<main>
+<div class="content">
+
+  <div class="breadcrumb">
+    <span data-lang="ru">Docs</span><span data-lang="en" style="display:none;">Docs</span>
+    &nbsp;/&nbsp; <span class="current" data-lang="ru">Начало работы</span><span class="current" data-lang="en" style="display:none;">Getting started</span>
+  </div>
+
+  <div class="page-header">
+    <h1>KRISPI UI</h1>
+    <p data-lang="ru">Официальная документация библиотеки GUI-меню KRISPI UI для Roblox. Ниже описана установка, базовые компоненты и полный справочник по API.</p>
+    <p data-lang="en" style="display:none;">Official documentation for the KRISPI UI GUI menu library for Roblox. Below you'll find installation instructions, core components, and a full API reference.</p>
+    <div class="badges">
+      <span class="badge stable" data-lang="ru">Стабильная версия</span>
+      <span class="badge stable" data-lang="en" style="display:none;">Stable release</span>
+      <span class="badge roblox">Roblox · Luau</span>
+    </div>
+  </div>
+
+  <section class="doc-section" id="install">
+    <h2><span class="num">01</span> <span data-lang="ru">Установка</span><span data-lang="en" style="display:none;">Installation</span></h2>
+    <p data-lang="ru">Подключите библиотеку одной строкой через <code>loadstring</code>, указав свою ссылку на raw-код.</p>
+    <p data-lang="en" style="display:none;">Load the library in a single line via <code>loadstring</code>, pointing to your own raw source link.</p>
+    <pre><span class="pre-label">luau</span><code><span class="kw">local</span> UI = <span class="fn">loadstring</span>(<span class="fn">game</span>:<span class="fn">HttpGet</span>(<span class="str">"https://pastebin.com/raw/ТВОЙ_КОД"</span>))()</code></pre>
+    <div class="callout">
+      <span data-lang="ru"><b>Примечание.</b> Замените <code>ТВОЙ_КОД</code> на идентификатор вашего raw-пастбина перед использованием.</span>
+      <span data-lang="en" style="display:none;"><b>Note.</b> Replace <code>ТВОЙ_КОД</code> with your own raw pastebin ID before use.</span>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section class="doc-section" id="window">
+    <h2><span class="num">02</span> <span data-lang="ru">Создание окна</span><span data-lang="en" style="display:none;">Creating a window</span></h2>
+    <p data-lang="ru">Метод <code>CreateWindow</code> создаёт главное окно интерфейса и принимает таблицу параметров.</p>
+    <p data-lang="en" style="display:none;">The <code>CreateWindow</code> method creates the main interface window and accepts a parameters table.</p>
+    <pre><span class="pre-label">luau</span><code><span class="kw">local</span> win = UI:<span class="fn">CreateWindow</span>(<span class="str">"Название"</span>, {
+    <span class="prop">Width</span> = <span class="num">520</span>,
+    <span class="prop">Height</span> = <span class="num">600</span>,
+    <span class="prop">X</span> = <span class="num">0.5</span>,
+    <span class="prop">Y</span> = <span class="num">0.5</span>
+})</code></pre>
+
+    <table class="param-table">
+      <tr>
+        <th data-lang="ru">Параметр</th><th data-lang="en" style="display:none;">Parameter</th>
+        <th data-lang="ru">Тип</th><th data-lang="en" style="display:none;">Type</th>
+        <th data-lang="ru">Описание</th><th data-lang="en" style="display:none;">Description</th>
+      </tr>
+      <tr><td>Width</td><td class="type">number</td><td data-lang="ru">Ширина окна в пикселях</td><td data-lang="en" style="display:none;">Window width in pixels</td></tr>
+      <tr><td>Height</td><td class="type">number</td><td data-lang="ru">Высота окна в пикселях</td><td data-lang="en" style="display:none;">Window height in pixels</td></tr>
+      <tr><td>X / Y</td><td class="type">number 0–1</td><td data-lang="ru">Относительная позиция на экране</td><td data-lang="en" style="display:none;">Relative position on screen</td></tr>
+    </table>
+  </section>
+
+  <hr class="divider" />
+
+  <section class="doc-section" id="tabs">
+    <h2><span class="num">03</span> <span data-lang="ru">Вкладки</span><span data-lang="en" style="display:none;">Tabs</span></h2>
+    <p data-lang="ru">Вкладки создаются внутри окна и служат контейнером для компонентов.</p>
+    <p data-lang="en" style="display:none;">Tabs are created inside a window and act as containers for components.</p>
+    <pre><span class="pre-label">luau</span><code><span class="kw">local</span> tab = win:<span class="fn">CreateTab</span>(<span class="str">"Название вкладки"</span>)</code></pre>
+  </section>
+
+  <hr class="divider" />
+
+  <section class="doc-section" id="el-section">
+    <h2><span data-lang="ru">Компоненты</span><span data-lang="en" style="display:none;">Components</span></h2>
+
+    <h3 id="el-section-h">▸ <span data-lang="ru">Секция</span><span data-lang="en" style="display:none;">Section</span></h3>
+    <pre><span class="pre-label">luau</span><code>tab:<span class="fn">CreateSection</span>(<span class="str">"Текст"</span>)</code></pre>
+
+    <h3 id="el-button">▸ <span data-lang="ru">Кнопка</span><span data-lang="en" style="display:none;">Button</span></h3>
+    <pre><span class="pre-label">luau</span><code>tab:<span class="fn">CreateButton</span>(<span class="str">"Текст"</span>, <span class="kw">function</span>()
+    <span class="fn">print</span>(<span class="str">"Нажата!"</span>)
+<span class="kw">end</span>)</code></pre>
+
+    <h3 id="el-toggle">▸ <span data-lang="ru">Тоггл</span><span data-lang="en" style="display:none;">Toggle</span></h3>
+    <pre><span class="pre-label">luau</span><code>tab:<span class="fn">CreateToggle</span>(<span class="str">"Название"</span>, <span class="kw">false</span>, <span class="kw">function</span>(state)
+    <span class="fn">print</span>(state)
+<span class="kw">end</span>)</code></pre>
+
+    <h3 id="el-slider">▸ <span data-lang="ru">Слайдер</span><span data-lang="en" style="display:none;">Slider</span></h3>
+    <pre><span class="pre-label">luau</span><code>tab:<span class="fn">CreateSlider</span>(<span class="str">"Название"</span>, <span class="num">16</span>, <span class="num">300</span>, <span class="num">16</span>, <span class="str">""</span>, <span class="kw">function</span>(v)
+    <span class="fn">print</span>(v)
+<span class="kw">end</span>)</code></pre>
+
+    <h3 id="el-dropdown">▸ <span data-lang="ru">Дропдаун</span><span data-lang="en" style="display:none;">Dropdown</span></h3>
+    <pre><span class="pre-label">luau</span><code>tab:<span class="fn">CreateDropdown</span>(<span class="str">"Название"</span>, {<span class="str">"А"</span>, <span class="str">"Б"</span>}, <span class="str">"А"</span>, <span class="kw">function</span>(v)
+    <span class="fn">print</span>(v)
+<span class="kw">end</span>)</code></pre>
+  </section>
+
+  <hr class="divider" />
+
+  <section class="doc-section" id="example">
+    <h2><span data-lang="ru">Полный пример</span><span data-lang="en" style="display:none;">Full example</span></h2>
+    <p data-lang="ru">Ниже приведён минимальный рабочий пример, объединяющий окно, вкладку и все основные компоненты.</p>
+    <p data-lang="en" style="display:none;">Below is a minimal working example combining a window, a tab, and all core components.</p>
+    <pre><span class="pre-label">luau</span><code><span class="kw">local</span> UI = <span class="fn">loadstring</span>(<span class="fn">game</span>:<span class="fn">HttpGet</span>(<span class="str">"https://pastebin.com/raw/ТВОЙ_КОД"</span>))()
+<span class="kw">local</span> win = UI:<span class="fn">CreateWindow</span>(<span class="str">"Моё меню"</span>)
+<span class="kw">local</span> main = win:<span class="fn">CreateTab</span>(<span class="str">"Главная"</span>)
+main:<span class="fn">CreateSection</span>(<span class="str">"Управление"</span>)
+main:<span class="fn">CreateButton</span>(<span class="str">"Привет"</span>, <span class="kw">function</span>() <span class="fn">print</span>(<span class="str">"Привет!"</span>) <span class="kw">end</span>)
+main:<span class="fn">CreateToggle</span>(<span class="str">"Ноклип"</span>, <span class="kw">false</span>, <span class="kw">function</span>(s) <span class="fn">print</span>(s) <span class="kw">end</span>)
+main:<span class="fn">CreateSlider</span>(<span class="str">"Скорость"</span>, <span class="num">16</span>, <span class="num">300</span>, <span class="num">16</span>, <span class="str">""</span>, <span class="kw">function</span>(v)
+    game.Players.LocalPlayer.Character.Humanoid.<span class="prop">WalkSpeed</span> = v
+<span class="kw">end</span>)
+main:<span class="fn">CreateDropdown</span>(<span class="str">"Предмет"</span>, {<span class="str">"Бита"</span>, <span class="str">"Молоток"</span>}, <span class="str">"Бита"</span>, print)</code></pre>
+  </section>
+
+  <hr class="divider" />
+
+  <section class="doc-section" id="close">
+    <h2><span data-lang="ru">Закрытие</span><span data-lang="en" style="display:none;">Closing</span></h2>
+    <p data-lang="ru">Полностью уничтожает интерфейс и освобождает связанные с ним ресурсы.</p>
+    <p data-lang="en" style="display:none;">Fully destroys the interface and releases its associated resources.</p>
+    <pre><span class="pre-label">luau</span><code>win:<span class="fn">Close</span>()</code></pre>
+  </section>
+
+  <footer>
+    <span>KRISPI UI Docs · v2.1</span>
+    <span data-lang="ru">© 2026 KrispiUI</span>
+    <span data-lang="en" style="display:none;">© 2026 KrispiUI</span>
+  </footer>
+
+</div>
+</main>
+
+<script>
+function setLang(lang){
+  document.querySelectorAll('[data-lang]').forEach(el=>{
+    el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+  });
+  document.getElementById('btn-ru').classList.toggle('active', lang==='ru');
+  document.getElementById('btn-en').classList.toggle('active', lang==='en');
+  document.documentElement.lang = lang;
+}
+
+const links = document.querySelectorAll('.sidebar a[href^="#"]');
+const sections = Array.from(links).map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const match = document.querySelector(`.sidebar a[href="#${entry.target.id}"]`);
+      if(match) match.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s=>observer.observe(s));
+</script>
+
+</body>
+</html>
