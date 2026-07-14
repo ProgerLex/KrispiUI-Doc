@@ -346,7 +346,6 @@ function setLang(lang){
   document.documentElement.lang = lang;
 }
 
-// active state in sidebar on scroll
 const links = document.querySelectorAll('.sidebar a[href^="#"]');
 const sections = Array.from(links).map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
 const observer = new IntersectionObserver((entries)=>{
