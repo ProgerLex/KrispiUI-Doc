@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>➜ KRISPI UI Docs</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0b0b0e;
+            background-image:
+                radial-gradient(circle at 15% 10%, rgba(58, 122, 58, 0.08), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(58, 122, 58, 0.06), transparent 35%);
+            color: #d6e6d6;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            padding: 40px 24px 80px;
+            line-height: 1.8;
+            max-width: 880px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f0f12; }
+        ::-webkit-scrollbar-thumb { background: #2a4a2a; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3a7a3a; }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 2px solid #1a2a1a;
+            padding-bottom: 18px;
+            flex-wrap: wrap;
+        }
+        .logo h1 {
+            color: #b4ebb4;
+            font-size: 2.6em;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-shadow: 0 0 24px rgba(180, 235, 180, 0.15);
+        }
+        .logo .badge {
+            background: #1a2a1a;
+            color: #6a9a6a;
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            font-weight: 600;
+            border: 1px solid #2a4a2a;
+        }
+        .subtitle { color: #6a8a6a; font-size: 1.05em; margin-top: 6px; }
+
+        /* Навигация по разделам */
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 22px 0 6px;
+        }
+        .nav a {
+            border: none;
+            background: #12181f;
+            color: #8cd48c;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #1e2e1e;
+            transition: all .15s ease;
+        }
+        .nav a:hover {
+            background: #1a2a1a;
+            color: #b4ebb4;
+            border-color: #3a7a3a;
+        }
+
+        h1 {
+            color: #b4ebb4;
+            font-size: 1.9em;
+            margin-top: 48px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #1a2a1a;
+            scroll-margin-top: 24px;
+        }
+        h1:first-of-type { margin-top: 36px; }
+        h2 { color: #b4ebb4; margin-top: 42px; border-left: 4px solid #3a7a3a; padding-left: 16px; font-size: 1.6em; }
+        h3 { color: #9ad89a; margin-top: 26px; margin-bottom: 6px; font-size: 1.15em; }
+        h4 { color: #8cd48c; margin-top: 20px; font-size: 1.05em; }
+        p { margin: 10px 0; color: #c8dcc8; }
+        a { color: #7cd47c; text-decoration: none; border-bottom: 1px dotted #2a4a2a; }
+        a:hover { color: #b4ebb4; border-bottom: 1px solid #6aba6a; }
+        hr { border: none; height: 1px; background: linear-gradient(to right, #1a2a1a, transparent); margin: 36px 0; }
+
+        pre {
+            background: #111115;
+            padding: 18px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #3a7a3a;
+            overflow-x: auto;
+            margin: 14px 0;
+            font-size: 14px;
+            position: relative;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+        }
+        pre .label {
+            position: absolute;
+            top: 6px;
+            right: 14px;
+            font-size: 10px;
+            color: #3a5a3a;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 700;
+            background: #1a1a1e;
+            padding: 2px 10px;
+            border-radius: 4px;
+        }
+        code { font-family: 'JetBrains Mono', 'Consolas', monospace; color: #8cd48c; font-size: 14px; }
+        .kw { color: #c792ea; }
+        .str { color: #c3e88d; }
+        .cm { color: #546e7a; font-style: italic; }
+        .fn { color: #82aaff; }
+        .num { color: #f78c6c; }
+        .prop { color: #ffcb6b; }
+
+        .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 10px; border: 1px solid #1a2a1a; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th { background: #131316; color: #b4ebb4; padding: 12px 16px; text-align: left; border-bottom: 2px solid #1e3a1e; }
+        td { padding: 10px 16px; border-bottom: 1px solid #18181c; background: #0e0e12; }
+        tr:hover td { background: #14141a; }
+
+        .tag { display: inline-block; background: #1a2a1a; color: #8cd48c; padding: 1px 12px; border-radius: 14px; font-size: 12px; font-weight: 600; }
+        .tag-type { background: #1a1a2a; color: #8cb4dc; }
+        .example-box { background: #111115; border: 1px solid #1a2a1a; border-radius: 10px; padding: 16px 20px; margin: 12px 0; }
+        .example-box .title { color: #6a8a6a; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+
+        .footer { text-align: center; margin-top: 60px; padding-top: 24px; border-top: 1px solid #161a16; color: #3a5a3a; font-size: 14px; }
+        .footer span { color: #5a8a5a; }
+
+        @media (max-width: 640px) {
+            body { padding: 24px 16px 60px; }
+            .logo h1 { font-size: 1.8em; }
+            h1 { font-size: 1.4em; }
+            h2 { font-size: 1.25em; }
+            pre { padding: 14px 16px; font-size: 12px; }
+            pre .label { display: none; }
+            table { font-size: 12px; }
+            th, td { padding: 8px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo">
+        <h1>➜ KRISPI UI</h1>
+        <span class="badge">v2.1</span>
+        <span class="badge" style="background:#0f1a0f;color:#5a8a5a;">пастель</span>
+    </div>
+    <p class="subtitle">Библиотека GUI-меню для Roblox | Документация</p>
+
+    <nav class="nav">
+        <a href="#install">📦 Установка</a>
+        <a href="#window">🪟 Окно</a>
+        <a href="#tabs">📑 Вкладки</a>
+        <a href="#elements">📂 Элементы</a>
+        <a href="#example">📄 Пример</a>
+        <a href="#close">❌ Закрытие</a>
+    </nav>
+
+    <div id="content">
+
+        <h1 id="install">📦 Установка</h1>
+        <pre><span class="label">lua</span><code><span class="kw">local</span> UI = <span class="fn">loadstring</span>(<span class="fn">game</span>:<span class="fn">HttpGet</span>(<span class="str">"https://pastebin.com/raw/ТВОЙ_КОД"</span>))()</code></pre>
+
+        <hr />
+
+        <h1 id="window">🪟 Создание окна</h1>
+        <pre><span class="label">lua</span><code><span class="kw">local</span> win = UI:<span class="fn">CreateWindow</span>(<span class="str">"Название"</span>, {
+    <span class="prop">Width</span> = <span class="num">520</span>,
+    <span class="prop">Height</span> = <span class="num">600</span>,
+    <span class="prop">X</span> = <span class="num">0.5</span>,
+    <span class="prop">Y</span> = <span class="num">0.5</span>
+})</code></pre>
+
+        <hr />
+
+        <h1 id="tabs">📑 Вкладки</h1>
+        <pre><span class="label">lua</span><code><span class="kw">local</span> tab = win:<span class="fn">CreateTab</span>(<span class="str">"Название вкладки"</span>)</code></pre>
+
+        <hr />
+
+        <h1 id="elements">📂 Элементы</h1>
+
+        <h3>▸ Секция</h3>
+        <pre><span class="label">lua</span><code>tab:<span class="fn">CreateSection</span>(<span class="str">"Текст"</span>)</code></pre>
+
+        <h3>▸ Кнопка</h3>
+        <pre><span class="label">lua</span><code>tab:<span class="fn">CreateButton</span>(<span class="str">"Текст"</span>, <span class="kw">function</span>()
+    <span class="fn">print</span>(<span class="str">"Нажата!"</span>)
+<span class="kw">end</span>)</code></pre>
+
+        <h3>▸ Тоггл</h3>
+        <pre><span class="label">lua</span><code>tab:<span class="fn">CreateToggle</span>(<span class="str">"Название"</span>, <span class="kw">false</span>, <span class="kw">function</span>(state)
+    <span class="fn">print</span>(state)
+<span class="kw">end</span>)</code></pre>
+
+        <h3>▸ Слайдер</h3>
+        <pre><span class="label">lua</span><code>tab:<span class="fn">CreateSlider</span>(<span class="str">"Название"</span>, <span class="num">16</span>, <span class="num">300</span>, <span class="num">16</span>, <span class="str">""</span>, <span class="kw">function</span>(v)
+    <span class="fn">print</span>(v)
+<span class="kw">end</span>)</code></pre>
+
+        <h3>▸ Дропдаун</h3>
+        <pre><span class="label">lua</span><code>tab:<span class="fn">CreateDropdown</span>(<span class="str">"Название"</span>, {<span class="str">"А"</span>, <span class="str">"Б"</span>}, <span class="str">"А"</span>, <span class="kw">function</span>(v)
+    <span class="fn">print</span>(v)
+<span class="kw">end</span>)</code></pre>
+
+        <hr />
+
+        <h1 id="example">📄 Полный пример</h1>
+        <pre><span class="label">lua</span><code><span class="kw">local</span> UI = <span class="fn">loadstring</span>(<span class="fn">game</span>:<span class="fn">HttpGet</span>(<span class="str">"https://pastebin.com/raw/ТВОЙ_КОД"</span>))()
+<span class="kw">local</span> win = UI:<span class="fn">CreateWindow</span>(<span class="str">"Моё меню"</span>)
+<span class="kw">local</span> main = win:<span class="fn">CreateTab</span>(<span class="str">"Главная"</span>)
+main:<span class="fn">CreateSection</span>(<span class="str">"Управление"</span>)
+main:<span class="fn">CreateButton</span>(<span class="str">"Привет"</span>, <span class="kw">function</span>() <span class="fn">print</span>(<span class="str">"Привет!"</span>) <span class="kw">end</span>)
+main:<span class="fn">CreateToggle</span>(<span class="str">"Ноклип"</span>, <span class="kw">false</span>, <span class="kw">function</span>(s) <span class="fn">print</span>(s) <span class="kw">end</span>)
+main:<span class="fn">CreateSlider</span>(<span class="str">"Скорость"</span>, <span class="num">16</span>, <span class="num">300</span>, <span class="num">16</span>, <span class="str">""</span>, <span class="kw">function</span>(v)
+    game.Players.LocalPlayer.Character.Humanoid.<span class="prop">WalkSpeed</span> = v
+<span class="kw">end</span>)
+main:<span class="fn">CreateDropdown</span>(<span class="str">"Предмет"</span>, {<span class="str">"Бита"</span>, <span class="str">"Молоток"</span>}, <span class="str">"Бита"</span>, print)</code></pre>
+
+        <hr />
+
+        <h1 id="close">❌ Закрытие</h1>
+        <pre><span class="label">lua</span><code>win:<span class="fn">Close</span>()</code></pre>
+
+    </div>
+
+    <div class="footer">
+        <span>➜ KRISPI UI</span> &middot; v2.1 &middot; ❤ сделано с душой
+    </div>
+
+</body>
+</html>
